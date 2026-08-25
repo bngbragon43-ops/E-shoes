@@ -1,0 +1,41 @@
+  @import "tailwindcss";
+ 
+ @plugin "daisyui" {
+   themes: light --default;
+ }
+
+@theme {
+  --color-primary: #de2c4d;
+  --color-secondary: #fb923c;
+
+  --font-poppins: "Poppins", sans-serif;
+  --font-averia: "Averia Serif Libre", serif;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 5rem;
+  }
+
+  @media (min-width: 1536px) {
+    padding-inline: 6rem;
+  }
+}
+  
+@layer utilities{
+  .drop-shadow{
+  filter: drop-shadow(-6px 8px 15px rgba(0, 0,0,0.2));
+}
+}
