@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdShoppingCart } from "react-icons/md";
+import { useCart } from "../../context/CartContext";
 
 import p1 from "../../assets/17.png";
 import p2 from "../../assets/14.png";
 import p3 from "../../assets/15.png";
 import p4 from "../../assets/16.png";
+import p5 from "../../assets/24.png";
+import p6 from "../../assets/25.png";
 
 const products = [
     {
@@ -13,7 +17,7 @@ const products = [
         name: "Jordan 1 Red",
         date: "10/09/2018",
         color: "Red",
-        price: "$180",
+        price: "500f",
         bg: "#c11912",
         img: p1,
       
@@ -23,7 +27,7 @@ const products = [
         name: "Air Max 90",
         date: "03/26/2019",
         color: "White",
-        price: "$150",
+        price: "500f",
         bg: "#1a1a2e",
         img: p2,
         
@@ -32,20 +36,40 @@ const products = [
         id: 3,
         name: "Nike Dunk Low",
         date: "10/10/2020",
-        color: "Green",
-        price: "$120",
-        bg: "#2d6a4f",
+        color: "blue",
+        price: "500f",
+        bg: "#024e93",
         img: p3,
       
     },
     {
         id: 4,
         name: "Air Force 1",
-        date: "09/12/1982",
+        date: "09/12/2000",
         color: "Black",
-        price: "$110",
-        bg: "#16213e",
+        price: "500f",
+        bg: "#2d2d2d",
         img: p4,
+      
+    },
+    {
+        id: 5,
+        name: "Air Force 1",
+        date: "09/12/2000",
+        color: "Black",
+        price: "500f",
+        bg: "#c55f4a",
+        img: p5,
+      
+    },
+    {
+        id: 6,
+        name: "Air Force 1",
+        date: "09/12/2000",
+        color: "Black",
+        price: "500f",
+        bg: "#2c7436",
+        img: p6,
       
     },
 ];
@@ -62,6 +86,8 @@ const Hero2 = () => {
     const [index, setIndex] = useState(0);
     const [dir, setDir] = useState(1);
     const [selectedSize, setSelectedSize] = useState(null);
+    const [added, setAdded] = useState(false);
+    const { addToCart } = useCart();
 
     const product = products[index];
 
@@ -71,9 +97,21 @@ const Hero2 = () => {
         setIndex((prev) => (prev + d + products.length) % products.length);
     };
 
+    const handleAddToCart = () => {
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: parseFloat(product.price),
+            img: product.img,
+            size: selectedSize,
+        });
+        setAdded(true);
+        setTimeout(() => setAdded(false), 1500);
+    };
+
     return (
         <section
-            className="relative min-h-full overflow-hidden text-white transition-colors duration-700"
+            className="relative h-full overflow-hidden text-white transition-colors duration-700"
             style={{ backgroundColor: product.bg }}
         >
             {/* big background text */}
@@ -90,7 +128,7 @@ const Hero2 = () => {
                 </motion.p>
             </AnimatePresence>
 
-            <div className="container relative z-10 grid grid-cols-1 md:grid-cols-2 min-h-[650px] items-center gap-8 py-14">
+            <div className="container relative z-10 grid grid-cols-1 md:grid-cols-2 h-full items-center gap-8 py-14">
                 {/* left — info */}
                 <div className="flex flex-col justify-center space-y-6">
                     <AnimatePresence mode="wait" custom={dir}>
@@ -145,8 +183,12 @@ const Hero2 = () => {
                             </div>
 
                             <div className="flex items-center gap-4 pt-2">
-                                <button className="bg-white text-gray-900 font-semibold py-3 px-8 rounded-2xl hover:bg-secondary hover:text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 cursor-pointer">
-                                    Add to cart
+                                <button
+                                    onClick={handleAddToCart}
+                                    className="bg-white text-gray-900 font-semibold py-3 px-8 rounded-2xl hover:bg-secondary hover:text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 cursor-pointer"
+                                >
+                                    {added ? "Ajouté !" : "Add to cart"}
+                                    {added && <MdShoppingCart className="inline-block ml-2" />}
                                 </button>
                                 <button
                                     onClick={() => go(-1)}

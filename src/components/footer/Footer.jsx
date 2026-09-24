@@ -6,10 +6,10 @@ import { IoArrowForward } from "react-icons/io5";
 import logo from "../../assets/Logo.png";
 
 const links = [
-    { name: "Home", href: "#" },
-    { name: "Products", href: "#products" },
-    { name: "Menu", href: "#menu" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "" },
+    { name: "Products", href: "products" },
+    { name: "Menu", href: "menu" },
+    { name: "Contact", href: "contact" },
 ];
 
 const socials = [

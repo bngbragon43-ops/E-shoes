@@ -1,31 +1,29 @@
 import { useState } from "react";
 import { SiNike } from "react-icons/si";
 import { MdOutlineShoppingCart, MdMenu } from "react-icons/md";
+import { Link } from 'react-router-dom';
 import ResponsiveMenu from "./ResponsiveMenu";
+import { useCart } from "../../context/CartContext";
 
 const NavbarMenu = [
   {
     id: 1,
     title: "HOME",
-    link: "/",
+    link: "/home",
   },
   {
     id: 2,
     title: "Products",
     link: "/products",
   },
+
   {
     id: 3,
-    title: "About",
-    link: "/about",
-  },
-  {
-    id: 4,
     title: "Shop",
     link: "/shop",
   },
   {
-    id: 5,
+    id:4,
     title: "Contacts",
     link: "/contact",
   },
@@ -33,6 +31,7 @@ const NavbarMenu = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <div className="relative">
@@ -58,22 +57,27 @@ const Navbar = () => {
                 className="text-xl"
                 key={menu.id}
               >
-                <a
-                  href={menu.link}
+                <Link to={menu.link}
                   className="inline-block px-3 py-1 font-semibold transition hover:text-primary hover:shadow-[0_3px_0_-1px_#ef4444]"
                 >
                   {menu.title}
-                </a>
+                </Link>
               </li>
             ))}
 
             {/* CART */}
-            <button
-              type="button"
-              className="rounded-full p-2 text-2xl transition hover:bg-primary hover:text-white"
+            <Link
+              to="/cart"
+              aria-label="Open cart"
+              className="relative rounded-full p-2 text-2xl transition hover:bg-primary hover:text-white"
             >
               <MdOutlineShoppingCart />
-            </button>
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-secondary text-white text-xs font-bold">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
 
           </ul>
         </div>

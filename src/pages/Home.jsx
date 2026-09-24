@@ -13,7 +13,7 @@ const Home = () => {
             <Banner />
             <Banner2 />
             <Banner3 />
-            <Footer />
+            
         </>
     );
 };

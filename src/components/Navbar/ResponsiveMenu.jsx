@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MdClose, MdOutlineShoppingCart } from "react-icons/md";
+import { NavLink, Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const listVariants = {
   hidden: {},
@@ -13,6 +15,7 @@ const itemVariants = {
 };
 
 const ResponsiveMenu = ({ open, onClose, menus }) => {
+  const { totalItems } = useCart();
 
   // Ferme le menu avec la touche Echap
   useEffect(() => {
@@ -76,26 +79,36 @@ const ResponsiveMenu = ({ open, onClose, menus }) => {
             >
               {menus.map((menu) => (
                 <motion.li key={menu.id} variants={itemVariants}>
-                  <a
-                    href={menu.link}
+                  <NavLink
+                    to={menu.link}
                     onClick={onClose}
-                    className="inline-block w-full rounded-xl px-3 py-2 transition hover:bg-white hover:text-primary"
+                    className={({ isActive }) =>
+                      `inline-block w-full rounded-xl px-3 py-2 transition hover:bg-white hover:text-primary ${
+                        isActive ? "bg-white text-primary" : ""
+                      }`
+                    }
                   >
                     {menu.title}
-                  </a>
+                  </NavLink>
                 </motion.li>
               ))}
             </motion.ul>
 
             {/* PANIER */}
             <div className="border-t border-white/20 px-6 py-4">
-              <button
-                type="button"
+              <Link
+                to="/cart"
+                onClick={onClose}
                 className="flex items-center gap-2 rounded-full bg-white px-5 py-2 font-semibold uppercase text-primary transition hover:bg-secondary hover:text-white"
               >
                 <MdOutlineShoppingCart className="text-2xl" />
                 Cart
-              </button>
+                {totalItems > 0 && (
+                  <span className="ml-1 flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-secondary text-white text-xs font-bold">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
             </div>
 
           </motion.div>
